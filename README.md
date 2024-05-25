@@ -8,51 +8,33 @@
   ## Método de un paso.
 ### Descripcion 
 
-El método de interpolación de Lagrange es una técnica matemática utilizada para encontrar un polinomio que pase exactamente por un conjunto dado de puntos. Este método es especialmente útil cuando se tiene un conjunto de datos discretos y se desea construir un polinomio que los describa de manera precisa. 
-trapecio para calcular el área bajo la curva.
+En métodos numéricos, el "método de un paso" se refiere a los métodos que utilizan la información de un solo punto anterior para calcular el siguiente punto en la solución de un problema. Estos métodos son particularmente útiles para la resolución de ecuaciones diferenciales ordinarias (EDO).
 
 ### Pseudocódigo 
 ```
-// Definir el procedimiento principal
-Inicio
-    // Definir los valores de x y y
-    xValues <- [1.0, 3.0]
-    yValues <- [2.0, 4.0]
+Definir función f(x, y):
+    retornar y - x
 
-    // Definir el punto a interpolar
-    x <- 2.0
+Definir método euler(x0, y0, xEnd, step):
+    x = x0
+    y = y0
 
-    // Llamar a la función lagrange para obtener el valor interpolado
-    interpolatedValue <- lagrange(x, xValues, yValues)
+    Imprimir "x =", x, ", y =", y
 
-    // Mostrar el valor interpolado
-    Imprimir "El valor interpolado en x = " + x + " es " + interpolatedValue
-Fin
+    Mientras x < xEnd hacer:
+        y = y + step * f(x, y)
+        x = x + step
 
-// Definir la función lagrange que calcula el polinomio de Lagrange
-Función lagrange(x, xValues, yValues) Devuelve Real
-    // Inicializar el resultado
-    resultado <- 0
+        Imprimir "x =", x, ", y =", y
 
-    // Iterar sobre los valores de xValues
-    Para i desde 0 hasta longitud(xValues) - 1 hacer
-        // Inicializar el término de Lagrange para el i-ésimo valor
-        término <- yValues[i]
+Definir método main:
+    x0 = 0.0
+    y0 = 1.0
+    xEnd = 2.0
+    step = 0.1
 
-        // Calcular el término de Lagrange
-        Para j desde 0 hasta longitud(xValues) - 1 hacer
-            Si j != i entonces
-                término <- término * (x - xValues[j]) / (xValues[i] - xValues[j])
-            FinSi
-        FinPara
+    Llamar a euler(x0, y0, xEnd, step)
 
-        // Sumar el término al resultado
-        resultado <- resultado + término
-    FinPara
-
-    // Devolver el resultado final
-    Devolver resultado
-FinFunción
 
 ```
 
@@ -61,28 +43,40 @@ FinFunción
 - Implementacion en Python
 
 ```
-  def lagrange(x, x_values, y_values):
-    result = 0
-    for i in range(len(x_values)):
-        term = y_values[i]
-        for j in range(len(x_values)):
-            if j != i:
-                term *= (x - x_values[j]) / (x_values[i] - x_values[j])
-        result += term
-    return result
+def f(x, y):
+    """
+    Define la función f(x, y) que describe la EDO.
+    En este caso, usaremos un ejemplo simple f(x, y) = y - x.
+    """
+    return y - x
 
-def main():
-    x_values = [1.0, 3.0]  # Valores de x
-    y_values = [2.0, 4.0]  # Valores de y
+def euler(x0, y0, x_end, step):
+    """
+    Implementa el Método de Euler para resolver la EDO.
+    """
+    x = x0
+    y = y0
 
-    x = 2.0  # Punto a interpolar
+    # Imprimir el punto inicial
+    print(f"x = {x:.4f}, y = {y:.4f}")
 
-    interpolated_value = lagrange(x, x_values, y_values)
-    print(f"El valor interpolado en x = {x} es {interpolated_value}")
+    # Iterar mientras x no haya alcanzado el valor final x_end
+    while x < x_end:
+        y = y + step * f(x, y)  # Aplicar el método de Euler para actualizar y
+        x = x + step            # Incrementar x por el tamaño del paso
+
+        # Imprimir el nuevo punto (x, y)
+        print(f"x = {x:.4f}, y = {y:.4f}")
 
 if __name__ == "__main__":
-    main()
+    # Valores iniciales y parámetros del método
+    x0 = 0.0    # Valor inicial de x
+    y0 = 1.0    # Valor inicial de y
+    x_end = 2.0  # Valor final de x
+    step = 0.1  # Tamaño del paso
 
+    # Llamar al método de Euler
+    euler(x0, y0, x_end, step)
 
 
 ```
@@ -90,15 +84,149 @@ if __name__ == "__main__":
 
 ### Ejercicios en java
 
-[Ejemplo 1](https://github.com/GABOHDEZ2001/TEMA-5---Interpolacion-y-ajuste-de-funciones-METODOS/blob/master/src/MetodoDeInterpolacionDeLagrange/MetodoDeInterpolacionDeLagrange1.java)
+[Ejemplo 1](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDeUnPaso1.java)
 
-[Ejemplo 2](https://github.com/GABOHDEZ2001/TEMA-5---Interpolacion-y-ajuste-de-funciones-METODOS/blob/master/src/MetodoDeInterpolacionDeLagrange/MetodoDeInterpolacionDeLagrange2.java)
+[Ejemplo 2](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDeUnPaso2.java)
 
-[Ejemplo 3](https://github.com/GABOHDEZ2001/TEMA-5---Interpolacion-y-ajuste-de-funciones-METODOS/blob/master/src/MetodoDeInterpolacionDeLagrange/MetodoDeInterpolacionDeLagrange3.java)
+[Ejemplo 3](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDeUnPaso3.java)
 
-[Ejemplo 4](https://github.com/GABOHDEZ2001/TEMA-5---Interpolacion-y-ajuste-de-funciones-METODOS/blob/master/src/MetodoDeInterpolacionDeLagrange/MetodoDeInterpolacionDeLagrange4.java)
+[Ejemplo 4](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDeUnPaso4.java)
+
+[Ejemplo 5](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDeUnPaso5.java)
 
 
 
-======================================================================================
+==========================================================================
+
+## Método de pasos múltiples.
+### Descripcion 
+El "método de pasos múltiples" es un enfoque utilizado en métodos numéricos para resolver ecuaciones diferenciales ordinarias (EDO). A diferencia de los métodos de un paso, que utilizan solo la información del punto anterior para calcular el siguiente punto, los métodos de pasos múltiples utilizan la información de varios puntos anteriores. Esto puede mejorar la precisión y eficiencia del cálculo.
+Los métodos de pasos múltiples son herramientas poderosas en el análisis numérico para resolver EDOs, ofreciendo un equilibrio entre precisión y eficiencia. Sin embargo, su implementación y uso requieren un buen entendimiento de su comportamiento y estabilidad.
+
+
+### Pseudocódigo 
+```
+// Definir la función f(t, y)
+Función f(t, y):
+    Retornar y - t^2 + 1
+
+// Método de Adams-Bashforth de 2 pasos
+Función adamsBashforth2(t0, y0, t1, y1, h):
+    f0 = f(t0, y0)
+    f1 = f(t1, y1)
+    Retornar y1 + h * (1.5 * f1 - 0.5 * f0)
+
+// Método de Adams-Moulton de 2 pasos (corrector)
+Función adamsMoulton2(t0, y0, t1, y1, h, predictor):
+    f0 = f(t0, y0)
+    fp = f(t1 + h, predictor)
+    f1 = f(t1, y1)
+    Retornar y1 + h * (0.5 * (fp + f1))
+
+// Función principal
+Principal:
+    Inicializar t0 = 0.0
+    Inicializar y0 = 0.5
+    Inicializar h = 0.1
+    Inicializar steps = 10
+
+    // Primer paso usando el método de Euler para obtener y1
+    t1 = t0 + h
+    y1 = y0 + h * f(t0, y0)
+
+    Imprimir "t =", t0, ", y =", y0
+    Imprimir "t =", t1, ", y =", y1
+
+    // Pasos múltiples de Adams-Bashforth-Moulton
+    Para i desde 2 hasta steps hacer:
+        t2 = t1 + h
+        predictor = adamsBashforth2(t0, y0, t1, y1, h)
+        corrector = adamsMoulton2(t0, y0, t1, y1, h, predictor)
+
+        Imprimir "t =", t2, ", y (predictor) =", predictor, ", y (corrector) =", corrector
+
+        // Actualizar valores para el siguiente paso
+        t0 = t1
+        y0 = y1
+        t1 = t2
+        y1 = corrector
+
+
+```
+
+
+### Implementacion 
+- Implementacion en Python
+
+```
+
+def f(t, y):
+    """
+    Define la función f(t, y) que describe la EDO.
+    Ejemplo: dy/dt = y - t^2 + 1
+    """
+    return y - t * t + 1
+
+def adams_bashforth2(t0, y0, t1, y1, h):
+    """
+    Método de Adams-Bashforth de 2 pasos.
+    """
+    f0 = f(t0, y0)
+    f1 = f(t1, y1)
+    return y1 + h * (1.5 * f1 - 0.5 * f0)
+
+def adams_moulton2(t0, y0, t1, y1, h, predictor):
+    """
+    Método de Adams-Moulton de 2 pasos (corrector).
+    """
+    f0 = f(t0, y0)
+    fp = f(t1 + h, predictor)
+    f1 = f(t1, y1)
+    return y1 + h * (0.5 * (fp + f1))
+
+def main():
+    # Condiciones iniciales
+    t0 = 0.0
+    y0 = 0.5
+    h = 0.1
+    steps = 10
+
+    # Primer paso usando el método de Euler para obtener y1
+    t1 = t0 + h
+    y1 = y0 + h * f(t0, y0)
+
+    print(f"t = {t0:.4f}, y = {y0:.4f}")
+    print(f"t = {t1:.4f}, y = {y1:.4f}")
+
+    # Pasos múltiples de Adams-Bashforth-Moulton
+    for i in range(2, steps + 2):
+        t2 = t1 + h
+        predictor = adams_bashforth2(t0, y0, t1, y1, h)
+        corrector = adams_moulton2(t0, y0, t1, y1, h, predictor)
+
+        print(f"t = {t2:.4f}, y (predictor) = {predictor:.4f}, y (corrector) = {corrector:.4f}")
+
+        # Actualizar valores para el siguiente paso
+        t0, y0 = t1, y1
+        t1, y1 = t2, corrector
+
+if __name__ == "__main__":
+    main()
+
+
+```
+
+
+### Ejercicios en java
+
+[Ejemplo 1](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDePasosMultiples1.java)
+
+[Ejemplo 2](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDePasosMultiples2.java)
+
+[Ejemplo 3](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDePasosMultiples3.java)
+
+[Ejemplo 4](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDePasosMultiples4.java)
+
+[Ejemplo 5](https://github.com/GABOHDEZ2001/T6----E2----Problemario-Metodos/blob/master/src/Problemario/MetodoDePasosMultiples5.java)
+
 
